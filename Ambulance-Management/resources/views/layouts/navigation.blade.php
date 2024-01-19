@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+{{-- <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -23,7 +23,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>Welcome </div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -97,4 +97,72 @@
             </div>
         </div>
     </div>
-</nav>
+</nav> --}}
+<nav>
+<div class="main-wrapper">
+
+    <div class="header">
+        <div class="header-left">
+            <a asp-controller="Home" asp-action="Index"  class="logo">
+                <img src="/img/logo.png" width="35" height="35" alt=""> <span>Preclinic</span>
+            </a>
+        </div>
+        <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+        <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+        <ul class="nav user-menu float-right mr-3">
+
+            <li class="nav-item dropdown has-arrow">
+                <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
+                    <span class="user-img">
+                        <img class="rounded-circle" src="/img/user.jpg" width="24" alt="Admin">
+                        <span class="status online"></span>
+                    </span>
+                <span>{{ Auth::user()->name }}</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item"   href="{{route('profile.edit')}}">{{ __('Profile') }}</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a class="dropdown-item"  href="{{route('logout')}}" onclick="event.preventDefault();
+                        this.closest('form').submit();">{{ __('Log Out') }}</a>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <div class="dropdown mobile-user-menu float-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+                <a class="dropdown-item" href="edit-profile.html">Edit Profile</a>
+                <a class="dropdown-item" href="settings.html">Settings</a>
+                <a class="dropdown-item" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-inner slimscroll">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title">Main</li>
+                    <li class="active">
+                        <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a asp-action="ListAll" asp-controller="Account"><i class="fa fa-user-md"></i> <span>Employees</span></a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="Patients"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="Appointments"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
+                    </li>
+                    <li>
+                        <a asp-action="Index" asp-controller="Reports"><i class="fa fa-book"></i> <span>Reports</span></a>
+                    </li>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <nav>
