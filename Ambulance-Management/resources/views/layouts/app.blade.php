@@ -2,22 +2,23 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+            <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+            <title>Preclinic - Medical & Hospital - Bootstrap 4 Admin Template</title>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+            <link rel="stylesheet" type="text/css" href="../../../css/font-awesome.min.css">
+            <link rel="stylesheet" type="text/css" href="../../../css/select2.min.css">
+            <link rel="stylesheet" type="text/css" href="../../../css/dataTables.bootstrap4.min.css">
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-datetimepicker.min.css">
+            <link rel="stylesheet" type="text/css" href="../../../css/styleAdmin.css">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
+        @include('layouts.navigation')
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white dark:bg-gray-800 shadow">
@@ -28,9 +29,28 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <div class="page-wrapper">
+            <div class="content">
+
                 {{ $slot }}
-            </main>
-        </div>
+            </div>
+            </div>
+
     </body>
+    <script src="../../../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../../../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../js/site.js" asp-append-version="true"></script>
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/popper.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
+    <script src="../../../js/jquery.slimscroll.js"></script>
+    <script src="../../../js/select2.min.js"></script>
+    <script src="../../../js/jquery.dataTables.min.js"></script>
+    <script src="../../../js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../../js/moment.min.js"></script>
+    <script src="../../../js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../../../js/app.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+
 </html>
