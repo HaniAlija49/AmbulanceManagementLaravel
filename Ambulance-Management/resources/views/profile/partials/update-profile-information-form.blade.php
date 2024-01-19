@@ -47,7 +47,36 @@
                 </div>
             @endif
         </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">{{ __('Birth date') }}</label>
+            <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" value="{{ old('date_of_birth', $user->date_of_birth) }}" required autofocus autocomplete="date_of_birth" />
+            <x-input-error class="mt-2" :messages="$errors->get('date_of_birth')" />
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">{{ __('gender') }}</label>
+            <input type="text" id="gender" name="gender" class="form-control" value="{{ old('gender', $user->gender) }}" required autofocus autocomplete="gender" />
+            <x-input-error class="mt-2" :messages="$errors->get('gender')" />
+        </div>
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">{{ __('Phone number') }}</label>
+            <input type="tel" id="phone_number" name="phone_number" class="form-control" value="{{ old('phone_number', $user->phone_number) }}" required autofocus autocomplete="phone_number" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        </div>
+        <div class="mb-3">
+            <label for="type_of_doctor" class="form-label">{{ __('Doctor type') }}</label>
+            <select id="type_of_doctor" name="type_of_doctor" class="form-control" required autofocus autocomplete="type_of_doctor">
+                @foreach (\App\Enums\DoctorType::cases() as $case)
+                <option value="{{ $case }}" {{ $user->type_of_doctor == $case ? 'selected' : '' }}>
+                    {{ $case }}
+                </option>
+                @endforeach
+            </select>
+            <x-input-error class="mt-2" :messages="$errors->get('type_of_doctor')" />
+        </div>
+        
 
+        
+        
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
 
