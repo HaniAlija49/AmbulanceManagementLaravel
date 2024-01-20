@@ -32,7 +32,5 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/reports', ReportController::class);
 
-Route::resource('/reports', ReportController::class);
-
 Route::resource('/appointments',AppointmentController::class);
 require __DIR__.'/auth.php';
