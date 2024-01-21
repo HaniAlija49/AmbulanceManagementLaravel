@@ -31,6 +31,7 @@ class User extends Authenticatable
         'gender',
         'phone_number',
         'type_of_doctor',
+        'profile_image'
     ];
 
     /**

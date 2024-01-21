@@ -14,7 +14,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
@@ -74,7 +74,11 @@
             <x-input-error class="mt-2" :messages="$errors->get('type_of_doctor')" />
         </div>
         
-
+        <div class="mb-3">
+            <label for="profile_image" class="form-label">{{ __('profile_image') }}</label>
+            <input type="file" id="profile_image" name="profile_image" class="form-control" value="{{ old('profile_image', $user->profile_image) }}" autofocus autocomplete="profile_image" />
+            <x-input-error class="mt-2" :messages="$errors->get('profile_image')" />
+        </div>
         
         
         <div class="mb-3">
