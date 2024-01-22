@@ -5,6 +5,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
             <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
             <title>Preclinic - Medical & Hospital - Bootstrap 4 Admin Template</title>
+
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
             <link rel="stylesheet" type="text/css" href="../../../css/font-awesome.min.css">
@@ -12,8 +13,6 @@
             <link rel="stylesheet" type="text/css" href="../../../css/dataTables.bootstrap4.min.css">
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-datetimepicker.min.css">
             <link rel="stylesheet" type="text/css" href="../../../css/styleAdmin.css">
-
-
         <!-- Scripts -->
         @vite(['resources/js/app.js'])
     </head>
@@ -37,6 +36,7 @@
             </div>
 
     </body>
+
     <script src="../../../lib/jquery/dist/jquery.min.js"></script>
     <script src="../../../lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../../../js/site.js" asp-append-version="true"></script>

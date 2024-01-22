@@ -22,6 +22,10 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
+    public function createPatient(): View
+    {
+        return view('auth.register-patient');
+    }
 
     /**
      * Handle an incoming registration request.
@@ -40,12 +44,17 @@ class RegisteredUserController extends Controller
         if($request->hasFile('profile_image')){
             $userRequest['profile_image']= $request->file('profile_image')->store('profile_images','public');
         }
-
         $user = User::create($userRequest);
-        $user->assignrole('patient');
+        if($request->has('role')){
+            $user->assignRole($request->role);
+        }
+        else{
+            $user->assignrole('patient');
+        }
+       
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }

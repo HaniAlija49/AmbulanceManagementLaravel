@@ -114,7 +114,7 @@
             <li class="nav-item dropdown has-arrow">
                 <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
                     <span class="user-img">
-                        <img class="rounded-circle" src="{{ Auth::user()->profile_image ? asset('storage/'. Auth::user()->profile_image) : asset('img/no-image.png') }}" width="24" alt="Admin">
+                        <img class="rounded-circle" src="{{ Auth::user()->profile_image ? asset('storage/'. Auth::user()->profile_image) : asset('img/no-image.jpg') }}" width="24" alt="Admin">
                         <span class="status online"></span>
                     </span>
                 <span>{{ Auth::user()->name }}</span>
