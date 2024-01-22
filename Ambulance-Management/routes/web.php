@@ -33,4 +33,5 @@ Route::middleware('auth')->group(function () {
 Route::resource('/reports', ReportController::class);
 
 Route::resource('/appointments',AppointmentController::class);
+Route::post('/appointments/{appointment}/toggle-approval', [AppointmentController::class, 'toggleApproval'])->name('appointments.toggleApproval');
 require __DIR__.'/auth.php';
