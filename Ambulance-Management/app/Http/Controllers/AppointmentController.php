@@ -102,4 +102,14 @@ class AppointmentController extends Controller
           ->with('success', 'Appointment deleted successfully.');
 
     }
+    public function toggleApproval(Request $request, Appointment $appointment)
+    {
+        $approve = $request->input('approve', true);
+
+        $appointment->update([
+            'isApproved' => $approve,
+        ]);
+
+        return redirect()->back()->with('success', 'Appointment status updated successfully.');
+    }
 }
