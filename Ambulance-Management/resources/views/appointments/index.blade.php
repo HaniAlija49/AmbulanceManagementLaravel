@@ -65,6 +65,8 @@
             </tbody>
         </table>
 
-        <a href="{{ route('appointments.create') }}">Create</a>
+        <div class="mt-4">
+        <a href="{{ route('appointments.create') }}" class="btn btn-primary">Create</a>
+        </div>
     </section>
 </x-app-layout>
