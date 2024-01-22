@@ -51,7 +51,8 @@
         </div>
 
         <div class="mt-4">
-            <a href="{{ route('reports.create') }}" class="btn btn-success">Create</a>
+        <a href="{{ route('reports.create') }}" class="btn btn-primary">Create</a>
         </div>
+
     </section>
 </x-app-layout>

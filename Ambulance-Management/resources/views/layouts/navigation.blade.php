@@ -154,10 +154,11 @@
                         <a asp-action="Index" asp-controller="Patients"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
                     </li>
                     <li>
-                        <a asp-action="Index" asp-controller="Appointments"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
+                     <a href="{{ route('appointments.index') }}"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
                     </li>
+
                     <li>
-                        <a asp-action="Index" asp-controller="Reports"><i class="fa fa-book"></i> <span>Reports</span></a>
+                     <a href="{{ route('reports.index') }}"><i class="fa fa-calendar"></i> <span>Reports</span></a>
                     </li>
 
 
