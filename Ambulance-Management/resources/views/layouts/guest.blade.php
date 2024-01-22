@@ -19,13 +19,7 @@
 
     </head>
     <div class="min-vh-100 d-flex flex-column justify-content-center align-items-center pt-6 pt-sm-0 bg-light dark-bg-dark">
-        <div>
-            <a href="/" class="navbar-brand">
-                <img src="your-logo.png" alt="Logo" class="img-fluid w-20 h-20 text-gray-500">
-            </a>
-        </div>
-
-        <div class="w-100 max-w-md mt-6 p-4 bg-white dark-bg-dark shadow-sm rounded-lg">
+        <div class="w-25 max-w-md mt-6 p-4 bg-white dark-bg-dark shadow-sm rounded-lg">
             {{ $slot }}
         </div>
     </div>
