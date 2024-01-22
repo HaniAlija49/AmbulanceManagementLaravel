@@ -13,47 +13,50 @@
     <button
         type="button"
         class="btn btn-danger"
-        data-bs-toggle="modal"
-        data-bs-target="#confirmUserDeletionModal"
+        data-toggle="modal"
+        data-target="#confirmUserDeletionModal"
     >
         {{ __('Delete Account') }}
     </button>
 
-    <div class="modal fade" id="confirmUserDeletionModal" tabindex="-1" aria-labelledby="confirmUserDeletionModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="confirmUserDeletionModal" tabindex="-1" role="dialog" aria-labelledby="confirmUserDeletionModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmUserDeletionModalLabel">
+                        {{ __('Delete Account') }}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{{ route('profile.destroy') }}" class="p-4">
                     @csrf
                     @method('delete')
-
-                    <h2 class="text-lg font-medium text-dark">
-                        {{ __('Are you sure you want to delete your account?') }}
-                    </h2>
-
-                    <p class="mt-1 text-sm text-secondary">
-                        {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
-                    </p>
-
-                    <div class="mt-6">
-                        <label for="password" class="form-label visually-hidden">{{ __('Password') }}</label>
-
-                        <input
-                            id="password"
-                            name="password"
-                            type="password"
-                            class="form-control"
-                            placeholder="{{ __('Password') }}"
-                        />
-
-                        <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+    
+                    <div class="modal-body">
+                        <p class="text-secondary">
+                            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                        </p>
+    
+                        <div class="form-group mt-3">
+                            <label for="password">{{ __('Password') }}</label>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                class="form-control"
+                                placeholder="{{ __('Password') }}"
+                            />
+                            <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                        </div>
                     </div>
-
-                    <div class="mt-6 d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             {{ __('Cancel') }}
                         </button>
-
-                        <button type="submit" class="btn btn-danger ms-3">
+                        <button type="submit" class="btn btn-danger">
                             {{ __('Delete Account') }}
                         </button>
                     </div>
@@ -61,4 +64,5 @@
             </div>
         </div>
     </div>
+    
 </section>
