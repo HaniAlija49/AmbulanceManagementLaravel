@@ -34,10 +34,19 @@
                         <label for="appointmentHour" class="form-label">Appointment Hour</label>
                         <select id="appointmentHour" name="appointmentHour" class="form-control" required autofocus autocomplete="appointmentHour">
                             @foreach (\App\Enums\Hour::cases() as $case)
-                                <option value="{{ $case }}">{{ $case }}</option>
+                                @php
+                                    // Access the actual integer value
+                                    $intValue = $case->value;
+                                    // Remove the last two zeros from the end
+                                    $stringValue = substr_replace((string)$intValue, '', -2);
+                                    // Format the time as HH:MM
+                                    $formattedTime = substr($stringValue, 0, -2) . ':' . substr($stringValue, -2);
+                                @endphp
+                                <option value="{{ $intValue }}">{{ $formattedTime }}</option>
                             @endforeach
                         </select>
                     </div>
+                    
 
 
                     <div class="mb-3 form-check">
