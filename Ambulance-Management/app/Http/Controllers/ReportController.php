@@ -90,6 +90,6 @@ class ReportController extends Controller
         $reports->delete();
 
         return redirect()->route('reports.index')
-          ->with('success', 'Report delete successfully.');
+          ->with('success', 'Report deleted successfully.');
     }
 }
