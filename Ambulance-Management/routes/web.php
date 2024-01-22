@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::resource('/reports', ReportController::class);
+
+Route::resource('/appointments',AppointmentController::class);
+Route::post('/appointments/{appointment}/toggle-approval', [AppointmentController::class, 'toggleApproval'])->name('appointments.toggleApproval');
 require __DIR__.'/auth.php';

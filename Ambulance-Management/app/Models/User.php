@@ -3,14 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use DateTime;
+use App\Enums\DoctorType;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +23,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'personal_number',
         'name',
         'email',
         'password',
+        'date_of_birth',
+        'gender',
+        'phone_number',
+        'type_of_doctor',
+        'profile_image'
     ];
 
     /**
@@ -41,5 +52,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'type_of_doctor' => DoctorType::class,
     ];
+
+    public function doctor_appointments() {
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function patient_appointments() {
+        return $this->hasMany(Appointment::class);
+    }
+    public function reports() {
+        return $this->hasMany(Report::class);
+    }
+    
 }

@@ -22,6 +22,10 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register');
     }
+    public function createPatient(): View
+    {
+        return view('auth.register-patient');
+    }
 
     /**
      * Handle an incoming registration request.
@@ -30,21 +34,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $userRequest = $request->validate([
+            'personal_number'=>['required','max:13','unique:'.User::class],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
+        
+        if($request->hasFile('profile_image')){
+            $userRequest['profile_image']= $request->file('profile_image')->store('profile_images','public');
+        }
+        $user = User::create($userRequest);
+        if($request->has('role')){
+            $user->assignRole($request->role);
+        }
+        else{
+            $user->assignrole('patient');
+        }
+       
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
     }
