@@ -1,5 +1,4 @@
 <x-app-layout>
-    <section class="container mt-4">
         <h1>List of Reports</h1>
 
         @if(session()->has('success'))
@@ -7,10 +6,7 @@
                 {{ session()->get('success') }}
             </div>
         @endif
-
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <table class="table table-striped">
+                <table class="table table-striped custom-table datatable">
                     <thead>
                         <tr>
                             <th>Appointment</th>
@@ -47,12 +43,9 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
 
         <div class="mt-4">
         <a href="{{ route('reports.create') }}" class="btn btn-primary">Create</a>
         </div>
 
-    </section>
 </x-app-layout>

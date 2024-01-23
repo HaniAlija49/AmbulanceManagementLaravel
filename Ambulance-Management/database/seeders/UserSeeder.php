@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'personal_number'=> 1234568791234,
             'name' => 'Admin',
             'email' => 'admin@admin.com',
-            'password' => bcrypt('secret'),
+            'password' => bcrypt('Admin123@'), // secret
         ]);
 
         // Assign roles to the user

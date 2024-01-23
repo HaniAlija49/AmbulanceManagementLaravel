@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\DoctorType;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,18 +9,51 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
+use Spatie\Permission\Contracts\Role;
 
 class ProfileController extends Controller
 {
-    /**
+    
+    public function index($type = null)
+    {
+        $user = Auth::user();
+        if ($type == null && $user->hasRole('admin')) {
+            $users = User::all();
+            return view('profile.index', ['users' => $users,'type'=>'Empolyees']);
+         }
+        else if ($type == 'patient') {
+            $patients = User::role('patient')->get();
+            return view('profile.index', ['users' => $patients ,'type'=>'Patients']);
+        }
+        else if ($type == 'doctor') {
+            $doctors = User::role('doctor')->get();
+            return view('profile.index', ['users' => $doctors ,'type'=>'Doctors']);
+        }
+        else {
+            return view('profile.index', ['users' => [],'type'=>'Route does not exist 404']);
+        }
+    }
+
+    /** 
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request, $id = null): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        if($id != null){
+            $user = User::find($id);
+            return view('profile.edit', [
+                'user' => $user,
+            ]);
+        }
+        else {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
+        }
+        
     }
+    
 
     /**
      * Update the user's profile information.

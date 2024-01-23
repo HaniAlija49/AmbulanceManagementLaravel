@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('doctor_id');
             $table->unsignedBigInteger('appointment_id');
             $table->foreign('doctor_id')->references('id')->on('users');
-            $table->foreign('appointment_id')->references('id')->on('appointments');
+            $table->foreign('appointment_id')->references('id')->on('appointments')->onDelete('cascade');
             $table->string('symptoms')->nullable();
             $table->string('diagnoses')->nullable();
             $table->string('prescriptions')->nullable();
