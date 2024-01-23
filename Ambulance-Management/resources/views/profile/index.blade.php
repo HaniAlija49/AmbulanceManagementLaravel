@@ -28,7 +28,7 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr>
-                        <td>{{ $user->personal_number }}</td>
+                        <td><a href ="{{route('profile.details',['id'=>$user->id])}}>"> {{ $user->personal_number }} </td></a>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->date_of_birth }}</td>
