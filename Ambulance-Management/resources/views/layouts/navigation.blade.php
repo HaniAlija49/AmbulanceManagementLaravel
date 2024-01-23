@@ -148,10 +148,10 @@
                         <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
                     <li>
-                        <a asp-action="ListAll" asp-controller="Account"><i class="fa fa-user-md"></i> <span>Employees</span></a>
+                        <a href="{{ route('profile.index') }}"><i class="fa fa-user-md"></i> <span>Employees</span></a>
                     </li>
                     <li>
-                        <a asp-action="Index" asp-controller="Patients"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
+                        <a href ="{{route('profile.index',['type'=>'patient'])}}"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
                     </li>
                     <li>
                      <a href="{{ route('appointments.index') }}"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
