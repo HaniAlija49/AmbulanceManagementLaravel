@@ -20,7 +20,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         if ($type == null && $user->hasRole('admin')) {
             $users = User::all();
-            return view('profile.index', ['users' => $users,'type'=>'Empolyees']);
+            return view('profile.index', ['users' => $users,'type'=>'Employees']);
          }
         else if ($type == 'patient') {
             $patients = User::role('patient')->get();
