@@ -26,10 +26,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/profile/details/{id}', [ProfileController::class, 'details'])->name('profile.details');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/employees/{type?}', [ProfileController::class, 'index'])->name('employees.index');  
+    Route::get('/employees/{type?}', [ProfileController::class, 'index'])->name('profile.index');  
 });
 Route::middleware('role:admin')->group(function () {
    
