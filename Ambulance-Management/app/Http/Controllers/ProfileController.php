@@ -14,7 +14,7 @@ use Spatie\Permission\Contracts\Role;
 
 class ProfileController extends Controller
 {
-    
+
     public function index($type = null)
     {
         $user = Auth::user();
@@ -35,7 +35,7 @@ class ProfileController extends Controller
         }
     }
 
-    /** 
+    /**
      * Display the user's profile form.
      */
     public function edit(Request $request, $id = null): View
@@ -47,12 +47,12 @@ class ProfileController extends Controller
             ]);
         }
         else {
-            return view('profile.edit', [
-                'user' => $request->user(),
-            ]);
-        }
-        
+        return view('profile.edit', [
+            'user' => $request->user(),
+        ]);
     }
+
+}
     
 
     /**
@@ -96,5 +96,20 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function details($id)
+    {
+    if ($id == null) {
+        return response()->json(['error' => 'Not Found'], 404);
+     }
+
+    $user = User::where('id', $id)->first();
+
+    if ($user == null) {
+        return response()->json(['error' => 'Not Found'], 404);
+     }
+
+    return view('profile.details', ['user' => $user]);
     }
 }
