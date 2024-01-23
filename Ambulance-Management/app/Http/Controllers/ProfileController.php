@@ -40,19 +40,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        if($id != null){
-            $user = User::find($id);
-            return view('profile.edit', [
-                'user' => $user,
-            ]);
-        }
-        else {
+
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
     }
-
-}
     
 
     /**
