@@ -28,7 +28,7 @@ class ReportController extends Controller
         $doctors = User::whereHas('roles', function ($query) {
             $query->where('name', 'doctor');
         })->get();
-        return view('reports.create', ['appointments' => $appointments, 'doctors'=>$doctors]);
+        return view('reports.create', ['appointments' => $appointments, 'doctors'=>$doctors]) ->with('success', 'Report created successfully.');;
     }
 
     /**

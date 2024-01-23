@@ -31,26 +31,19 @@ class ProfileController extends Controller
             return view('profile.index', ['users' => $doctors ,'type'=>'Doctors']);
         }
         else {
-            return view('profile.index', ['users' => [],'type'=>'Route does not exist 404']);
+            abort(404);
         }
     }
 
     /** 
      * Display the user's profile form.
      */
-    public function edit(Request $request, $id = null): View
+    public function edit(Request $request): View
     {
-        if($id != null){
-            $user = User::find($id);
-            return view('profile.edit', [
-                'user' => $user,
-            ]);
-        }
-        else {
+
             return view('profile.edit', [
                 'user' => $request->user(),
             ]);
-        }
         
     }
     

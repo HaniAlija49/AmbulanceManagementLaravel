@@ -47,7 +47,7 @@ class AppointmentController extends Controller
              'isApproved'      => $isApproved,
          ]);
      
-         return redirect('/appointments');
+         return redirect('/appointments')->with('success', 'Appointment created successfully.');
     }
 
     /**
@@ -86,7 +86,7 @@ class AppointmentController extends Controller
         $appointments->update($request->all());
 
         return redirect()->route('appointments.index')
-          ->with('success', 'Appointment updated successfully.');
+          ->with('success', 'Appointment updated successfully.')->with('success', 'Appointment updated successfully.');
     }
 
     /**
@@ -99,7 +99,7 @@ class AppointmentController extends Controller
         $appointments->delete();
 
         return redirect()->route('appointments.index')
-          ->with('success', 'Appointment deleted successfully.');
+          ->with('success', 'Appointment deleted successfully.')->with('success', 'Appointment deleted successfully.');
 
     }
     public function toggleApproval(Request $request, Appointment $appointment)

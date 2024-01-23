@@ -3,8 +3,8 @@
         <h1>{{$type}}</h1>
 
         @if(session()->has('success'))
-            <div>
-                <h3>{{ session()->get('success') }}</h3>
+            <div class="alert alert-success">
+                {{ session()->get('success') }}
             </div>
         @endif
 
