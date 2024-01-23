@@ -39,6 +39,10 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'date_of_birth'=>['date'],
+            'gender'=>['string'],
+            'phone_number'=>['number'],
+            'type_of_doctor'=>['string'],
         ]);
         
         if($request->hasFile('profile_image')){
