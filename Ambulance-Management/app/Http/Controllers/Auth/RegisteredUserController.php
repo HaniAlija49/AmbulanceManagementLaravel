@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'date_of_birth'=>['date'],
             'gender'=>['string'],
-            'phone_number'=>['number'],
+            'phone_number' => ['numeric', 'digits:9'],
             'type_of_doctor'=>['string'],
         ]);
         
@@ -55,11 +55,13 @@ class RegisteredUserController extends Controller
         else{
             $user->assignrole('patient');
         }
-       
+       if($userRequest){
         event(new Registered($user));
+       }
+        
 
         // Auth::login($user);
 
-        return redirect('/employees');
+        return redirect()->back();
     }
 }

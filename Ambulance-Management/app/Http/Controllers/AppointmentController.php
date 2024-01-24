@@ -104,12 +104,12 @@ class AppointmentController extends Controller
     }
     public function toggleApproval(Request $request, Appointment $appointment)
     {
-        $approve = $request->input('approve', true);
-
+        $approve = $request->input('approve') == 1; // Convert to boolean
+    
         $appointment->update([
             'isApproved' => $approve,
         ]);
-
+    
         return redirect()->back()->with('success', 'Appointment status updated successfully.');
     }
 }

@@ -3,11 +3,10 @@
         <h1>Appointments</h1>
 
         @if(session()->has('success'))
-            <div>
-                <h3>{{ session()->get('success') }}</h3>
-            </div>
-        @endif
-
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+    @endif
         <table class="table table-striped custom-table datatable">
             <thead>
                 <tr>
@@ -45,18 +44,19 @@
                                     </form>
 
                                     @if ($appointment->isApproved)
-                                        <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
-                                            @csrf
-                                            <input type="hidden" name="approve" value="false" />
-                                            <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-times m-r-5"></i> Disapprove</button>
-                                        </form>
-                                    @else
-                                         <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
-                                            @csrf
-                                            <input type="hidden" name="approve" value="true" />
-                                            <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-check m-r-5"></i> Approve</button>
-                                        </form> 
-                                    @endif
+                                    <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
+                                        @csrf
+                                        <input type="hidden" name="approve" value="0" /> <!-- Set to 0 for false (disapprove) -->
+                                        <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-times m-r-5"></i> Disapprove</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
+                                        @csrf
+                                        <input type="hidden" name="approve" value="1" /> <!-- Set to 1 for true (approve) -->
+                                        <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-check m-r-5"></i> Approve</button>
+                                    </form>
+                                @endif
+                                
                                 </div>
                             </div>
                         </td>

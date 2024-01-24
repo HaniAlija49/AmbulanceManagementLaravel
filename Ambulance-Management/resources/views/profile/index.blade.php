@@ -48,12 +48,12 @@
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ route('profile.edit', $user->id) }}" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <form action="{{ route('profile.destroy', $user->id) }}" method="post" class="dropdown-item">
+                                    <form action="{{ route('profile.delete', ['id' => $user->id]) }}" method="post" class="dropdown-item" onsubmit="return confirm('Are you sure you want to delete your profile?');">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-trash-o m-r-5"></i> Delete</button>
                                     </form>
+                                    
                                 </div>
                             </div>
                         </td>

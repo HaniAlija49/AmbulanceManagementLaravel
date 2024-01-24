@@ -53,10 +53,17 @@
             <x-input-error class="mt-2" :messages="$errors->get('date_of_birth')" />
         </div>
         <div class="mb-3">
-            <label for="gender" class="form-label">{{ __('gender') }}</label>
-            <input type="text" id="gender" name="gender" class="form-control" value="{{ old('gender', $user->gender) }}" required autofocus autocomplete="gender" />
+            <label for="gender" class="form-label">{{ __('Gender') }}</label>
+            <select id="gender" name="gender" class="form-control" required autofocus autocomplete="gender">
+                @foreach (\App\Enums\Genders::cases() as $case)
+                    <option value="{{ $case }}" {{$user->gender == $case->value ? 'selected' : ''}}>
+                        {{$case}}
+                    </option>
+                @endforeach
+            </select>
             <x-input-error class="mt-2" :messages="$errors->get('gender')" />
-        </div>
+        </div>        
+        
         <div class="mb-3">
             <label for="phone_number" class="form-label">{{ __('Phone number') }}</label>
             <input type="tel" id="phone_number" name="phone_number" class="form-control" value="{{ old('phone_number', $user->phone_number) }}" required autofocus autocomplete="phone_number" />
@@ -66,7 +73,7 @@
             <label for="type_of_doctor" class="form-label">{{ __('Doctor type') }}</label>
             <select id="type_of_doctor" name="type_of_doctor" class="form-control" required autofocus autocomplete="type_of_doctor">
                 @foreach (\App\Enums\DoctorType::cases() as $case)
-                <option value="{{ $case }}" {{ $user->type_of_doctor == $case ? 'selected' : '' }}>
+                <option value="{{ $case }}" {{ $user->type_of_doctor == $case->value ? 'selected' : '' }}>
                     {{ $case }}
                 </option>
                 @endforeach

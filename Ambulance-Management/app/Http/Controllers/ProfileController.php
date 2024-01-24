@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
-use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
@@ -19,7 +19,12 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($type == null && $user->hasRole('admin')) {
-            $users = User::all();
+
+            $patientsRole = Role::where('name', 'patient')->first();
+
+            $users = User::doesntHave('roles', 'or', function ($query) use ($patientsRole) {
+                $query->where('role_id', $patientsRole->id);
+            })->get();
             return view('profile.index', ['users' => $users,'type'=>'Employees']);
          }
         else if ($type == 'patient') {
@@ -81,7 +86,9 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
-
+        if($user->profile_image != null){
+            Storage::disk('public')->delete($user->profile_image);
+        }
         $user->delete();
 
         $request->session()->invalidate();
@@ -89,6 +96,26 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    public function del($id): RedirectResponse
+{
+    $user = User::find($id);
+
+    if ($user) {
+        if($user->role == 'patient') {
+            if($user->profile_image != null){
+                Storage::disk('public')->delete($user->profile_image);
+            }
+            $user->delete();
+            return redirect()->back();
+        }
+        else{
+            return Redirect::back()->with('error', 'You dont have the role to delete');
+        }
+    } else {
+        return Redirect::back()->with('error', 'User not found.');
+    }
+}
+
 
     public function details($id)
     {
