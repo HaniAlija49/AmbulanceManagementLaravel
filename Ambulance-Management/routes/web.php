@@ -21,8 +21,7 @@ Route::get('/', function () {
     $roleName = 'doctor';
     // Retrieve users with the specified role
     $users = User::whereHas('roles', function ($query) use ($roleName) {
-        $query->where('name', $roleName);
-    })->take(4)->get();
+        $query->where('name', $roleName);})->take(4)->get();
     if($users){
         return view('welcome', compact('users'));
     }
