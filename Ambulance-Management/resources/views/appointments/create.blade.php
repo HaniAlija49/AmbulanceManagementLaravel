@@ -6,7 +6,18 @@
 
                 <form action="{{ route('appointments.store') }}" method="POST">
                     @csrf
-
+                    @php
+                    $user = Auth::user();
+                    @endphp
+                    @if($user->hasRole('patient'))
+                        <div class="form-group">
+                            <label for="patient_id">Patient ID</label>
+                            <select name="patient_id" class="form-control" disabled>                 
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            </select>
+                        </div>
+                    
+                    @else
                     <div class="form-group">
                         <label for="patient_id">Patient ID</label>
                         <select name="patient_id" class="form-control">
@@ -15,8 +26,17 @@
                             @endforeach
                         </select>
                     </div>
-
-                    <div class="form-group">
+                    
+                    @endif
+                    @if($user->hasRole('doctor'))
+                        <div class="form-group">
+                            <label for="doctor_id">Doctor ID</label>
+                            <select name="doctor_id" class="form-control" disabled>                  
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            </select>
+                        </div>
+                    
+                    @else<div class="form-group">
                         <label for="doctor_id">Doctor ID</label>
                         <select name="doctor_id" class="form-control">
                             @foreach ($doctors as $doctor)
@@ -24,6 +44,7 @@
                             @endforeach
                         </select>
                     </div>
+                    @endif
 
                     <div class="form-group">
                         <label for="appointmentDate">Appointment Date</label>

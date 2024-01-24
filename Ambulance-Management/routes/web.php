@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,11 +33,10 @@ Route::get('/', function () {
     }
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile/details/{id}', [ProfileController::class, 'details'])->name('profile.details');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -43,12 +44,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/{type?}', [ProfileController::class, 'index'])->name('profile.index');  
     Route::match(['post', 'delete'], '/profile/delete/{id}', [ProfileController::class, 'del'])->name('profile.delete');
 
+    Route::resource('/reports', ReportController::class);
+    Route::post('/reports/doctor/{id}/{aid}', [ReportController::class, 'createByDoctor'])->name('reports.createbydoctor');
+
+    Route::resource('/appointments',AppointmentController::class);
+    Route::post('/appointments/{appointment}/toggle-approval', [AppointmentController::class, 'toggleApproval'])->name('appointments.toggleApproval');
+
+
+
 });
 Route::middleware('role:admin')->group(function () {
    
 });
-Route::resource('/reports', ReportController::class);
 
-Route::resource('/appointments',AppointmentController::class);
-Route::post('/appointments/{appointment}/toggle-approval', [AppointmentController::class, 'toggleApproval'])->name('appointments.toggleApproval');
 require __DIR__.'/auth.php';

@@ -7,6 +7,25 @@
                 <form action="{{ route('reports.store') }}" method="POST">
                     @csrf
 
+                    @if(isset($appointment))
+                    <div class="form-group">
+                        <label for="appointment_id">Appointment ID</label>
+                        <select name="appointment_id" class="form-control" disabled> 
+                                <option  value="{{ $appointment->id }}" selected>{{ $appointment->id }}</option>
+                        </select>
+                        <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="doctor_id">Doctor ID</label>
+                        <select name="doctor_id" class="form-control" disabled>
+                                <option  value="{{ $doctor->id }}" selected>{{ $doctor->name }}</option>
+                        </select>
+                        <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                    </div>
+
+                    @else
+
                     <div class="form-group">
                         <label for="appointment_id">Appointment ID</label>
                         <select name="appointment_id" class="form-control">
@@ -15,7 +34,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="doctor_id">Doctor ID</label>
                         <select name="doctor_id" class="form-control">
@@ -25,6 +43,8 @@
                         </select>
                     </div>
 
+                    @endif
+                    
                     <div class="form-group">
                         <label for="symptoms">Symptoms</label>
                         <textarea name="symptoms" class="form-control"></textarea>

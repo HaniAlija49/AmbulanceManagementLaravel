@@ -158,7 +158,7 @@
                     </li>
 
                     <li>
-                     <a href="{{ route('reports.index') }}"><i class="fa fa-calendar"></i> <span>Reports</span></a>
+                     <a href="{{ route('reports.index') }}"><i class="fa fa-book"></i> <span>Reports</span></a>
                     </li>
 
 

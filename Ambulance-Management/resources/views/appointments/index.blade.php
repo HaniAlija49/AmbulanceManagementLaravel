@@ -37,6 +37,12 @@
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{{ route('appointments.edit', $appointment->id) }}" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <form method="post" action="{{ route('reports.createbydoctor', ['id' => Auth::user()->id, 'aid' => $appointment->id]) }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fa fa-pencil m-r-5"></i> Add report
+                                        </button>
+                                    </form>
                                     <form action="{{ route('appointments.destroy', $appointment->id) }}" method="post" class="dropdown-item">
                                         @csrf
                                         @method('delete')
