@@ -23,7 +23,13 @@ Route::get('/', function () {
     $users = User::whereHas('roles', function ($query) use ($roleName) {
         $query->where('name', $roleName);
     })->take(4)->get();
-    return view('welcome', compact('users'));
+    if($users){
+        return view('welcome', compact('users'));
+    }
+    else{
+        $users = [];
+        return view('welcome', compact('users'));
+    }
 });
 
 Route::get('/dashboard', function () {
