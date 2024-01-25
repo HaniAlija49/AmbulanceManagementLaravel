@@ -520,9 +520,10 @@
         </div>
 
         <div class="row">
+          @if($users)
           @foreach ($users as $user)
               
-          @endforeach
+          
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
             <div class="member" data-aos="fade-up" data-aos-delay="100">
               <div class="member-img">
@@ -540,8 +541,11 @@
               </div>
             </div>
           </div>
-
-
+@endforeach
+@else{
+  <p>No doctors</p>
+}
+@endif
         </div>
 
       </div>
