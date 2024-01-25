@@ -140,6 +140,129 @@ To use this application, simply login with the information above and register ne
 
 ## Unit Testing
 
+##### Admin registers patient
+
+public function test_user_can_register_as_patient()
+
+    {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Storage::fake('public');
+
+        $userData = [
+            'personal_number' => $this->faker->unique()->numberBetween(1000000000000, 9999999999999),
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'password' => 'password123',
+            'password_confirmation' => 'password123',
+            'date_of_birth' => $this->faker->date,
+            'gender' => $this->faker->randomElement(['male', 'female']),
+            'phone_number' => $this->faker->numerify('#########'),
+        ];
+
+        $response = $this->post(route('register'), $userData);
+
+        $response->assertRedirect();
+
+        $user = User::where('email', $userData['email'])->first();
+        $this->assertNotNull($user);
+
+        // Check if the user has the 'admin' role
+        $this->assertTrue($user->hasRole('patient'));
+
+        Storage::disk('public')->assertExists($user->profile_image);
+    }
+
+
+
+##### Doctor create appointment
+
+public function testDoctorCanCreateAppointment()
+
+    {
+        // Create a doctor role
+        Role::create(['name' => 'doctor']);
+        Role::create(['name' => 'patient']);
+
+        // Create a doctor user with the 'doctor' role
+        $doctor = User::factory()->create();
+        $doctor->assignRole('doctor');
+        $this->actingAs($doctor); // Log in as the doctor user
+
+        // Create a patient user with the 'patient' role
+        $patient = User::factory()->create();
+        $patient->assignRole('patient');
+
+        // Send a request to create an appointment
+        $response = $this->post('/appointments', [
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'appointmentDate' => '2024-01-25', // Replace with a valid date
+            'appointmentHour' => '10:00', // Replace with a valid time
+            'isApproved' => true,
+        ]);
+
+        // Assert that the appointment was created successfully
+        $response->assertStatus(302); // Redirect status code
+        $response->assertSessionHas('success', 'Appointment created successfully.');
+
+        // Assert that the appointment is stored in the database
+        $this->assertDatabaseHas('appointments', [
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id,
+            'appointmentDate' => '2024-01-25',
+            'appointmentHour' => '10:00',
+            'isApproved' => true,
+        ]);
+    }
+
+
+##### Doctor create report
+
+public function testDoctorCanCreateReport()
+
+    {
+        $doctor = User::factory()->create();
+        $doctor->assignRole('doctor');
+
+        // Create a fake patient user
+        $patient = User::factory()->create();
+        $patient->assignRole('patient');
+
+        // Login the doctor
+        $this->actingAs($doctor);
+
+        // Create an appointment
+        $appointment = Appointment::create([
+            'doctor_id' => $doctor->id,
+            'patient_id' => $patient->id, // Use the patient's id
+            'appointmentDate' => now()->toDate(),
+            'appointmentHour' => '10:00',
+            'isApproved' => true,
+        ]);
+
+        // Make a POST request to store the report
+        $response = $this->post('/reports', [
+            'appointment_id' => $appointment->id,
+            'doctor_id' => $doctor->id,
+            'symptoms' => 'Test symptoms',
+            'diagnoses' => 'Test diagnoses',
+            'prescriptions' => 'Test prescriptions',
+        ]);
+
+        // Assert that the report was successfully created
+        $response->assertRedirect('/reports');
+        $this->assertDatabaseHas('reports', [
+            'appointment_id' => $appointment->id,
+            'doctor_id' => $doctor->id,
+            'symptoms' => 'Test symptoms',
+            'diagnoses' => 'Test diagnoses',
+            'prescriptions' => 'Test prescriptions',
+        ]);
+    }
+
 
 ## Technologies Used
 
