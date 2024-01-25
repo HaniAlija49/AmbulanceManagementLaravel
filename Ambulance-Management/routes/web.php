@@ -48,8 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/reports', ReportController::class);
 });
 Route::middleware('role:doctor|nurse')->group(function () {
-    Route::get('/reports/create', 'ReportController@create')->name('reports.create');
-    Route::post('/reports', 'ReportController@store')->name('reports.store');
+    Route::get('/reports/create', [ReportController::class,'create'])->name('reports.create');
+    Route::post('/reports', [ReportController::class,'store'])->name('reports.store');
 });
 Route::middleware('role:doctor')->group(function () {
 Route::post('/reports/doctor/{id}/{aid}', [ReportController::class, 'createByDoctor'])->name('reports.createbydoctor');

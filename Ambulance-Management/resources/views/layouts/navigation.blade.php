@@ -169,7 +169,7 @@
                     <li class="active">
                         <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
-                    @if(Auth::user()->hasRole('patient'))
+                    @if(!Auth::user()->hasRole('admin'))
                     <li>
                         <a href ="{{route('profile.index',['type'=>'doctor'])}}"><i class="fa fa-user-md"></i> <span>Doctors</span></a>
                     </li>

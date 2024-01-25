@@ -59,7 +59,9 @@
                 @endif
                    
                     <th>Profile Image</th>
+                    @if(Auth::user()->hasRole('admin'))
                     <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -81,6 +83,7 @@
                                 No Image
                             @endif
                         </td>
+                        @if(Auth::user()->hasRole('admin'))
                         <td>
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -94,6 +97,7 @@
                                 </div>
                             </div>
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
