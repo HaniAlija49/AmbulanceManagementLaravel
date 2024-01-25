@@ -1,12 +1,49 @@
 <x-app-layout>
     <section>
-        <h1>{{$type}}</h1>
 
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
             </div>
         @endif
+        @if(session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session()->get('error') }}
+        </div>
+    @endif
+
+        @if(Auth::user()->hasRole('patient'))
+            <div class="section-title">
+              <h2>Doctors</h2>
+            </div>
+    
+            <div class="row w-100">
+              @foreach ($users as $user)
+                  
+              @endforeach
+              <div class="col-lg-3 col-md-6 d-flex align-items-start">
+                <div class="member card p-2 w-1" data-aos="fade-up" data-aos-delay="100">
+                  <div class="member-img">
+                    <img src="{{ $user->profile_image ? asset('storage/'.  $user->profile_image) : asset('img/no-image.jpg') }}" class="img-fluid" alt="">
+                    <div class="social">
+                      <a href=""><i class="bi bi-twitter"></i></a>
+                      <a href=""><i class="bi bi-facebook"></i></a>
+                      <a href=""><i class="bi bi-instagram"></i></a>
+                      <a href=""><i class="bi bi-linkedin"></i></a>
+                    </div>
+                  </div>
+                  <div class="member-info">
+                    <h4>{{$user->name}}</h4>
+                    <span>{{$user->type_of_doctor}}</span>
+                  </div>
+                </div>
+              </div>
+    
+    
+            </div>
+    
+        @else
+        <h1>{{$type}}</h1>
 
         <table class="table table-striped custom-table datatable">
             <thead>
@@ -69,5 +106,6 @@
             <a href="{{ route('register') }}" class="btn btn-primary">Add Employee</a>
             @endif
         </div>
+        @endif
     </section>
 </x-app-layout>

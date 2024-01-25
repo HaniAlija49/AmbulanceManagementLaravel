@@ -4,18 +4,31 @@
             @csrf
             @method('put')
 
-            <div class="form-group">
-                <label for="patient_id" class="form-label">Patient</label>
-                <select name="patient_id" class="form-control">
-                    {{-- Assuming $patients is an array or collection of patients --}}
-                    @foreach ($patients as $patient)
-                        <option value="{{ $patient->id }}" {{ $patient->id == $appointments->patient_id ? 'selected' : '' }}>
-                            {{ $patient->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+       
 
+            @if(Auth::user()->hasRole('patient'))
+                        <div class="form-group">
+                            <label for="patient_id">Patient ID</label>
+                            <select name="patient_id" class="form-control" disabled>                 
+                                    <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }} </option>
+                            </select>
+                            <input type="hidden" name="patient_id" value="{{ Auth::user()->id }}">
+                        </div>
+                    
+                    @else
+                    <div class="form-group">
+                        <label for="patient_id" class="form-label">Patient</label>
+                        <select name="patient_id" class="form-control">
+                            {{-- Assuming $patients is an array or collection of patients --}}
+                            @foreach ($patients as $patient)
+                                <option value="{{ $patient->id }}" {{ $patient->id == $appointments->patient_id ? 'selected' : '' }}>
+                                    {{ $patient->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    @endif
             <div class="form-group">
                 <label for="doctor_id" class="form-label">Doctor</label>
                 <select name="doctor_id" class="form-control">

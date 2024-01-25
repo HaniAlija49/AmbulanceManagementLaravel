@@ -51,6 +51,7 @@
                                                 <tr>
                                                     <th>Patient Name</th>
                                                     <th>Doctor Name</th>
+                                                    <th>Doctor type</th>
                                                     <th>Date</th>
                                                     <th>Hour</th>
                                                     <th class="text-right">Status</th>
@@ -64,6 +65,7 @@
                                                 <tr>
                                                     <td>{{ $appointment->patient->name }}</td>
                                                     <td>{{ $appointment->doctor->name }}</td>
+                                                    <td>{{ $appointment->doctor->type_of_doctor }}</td>
                                                     <td>{{ $appointment->appointmentDate }}</td>
                                                     <td>{{ $appointment->appointmentHour }}</td>
                                                     <td>
@@ -126,43 +128,77 @@
                             </div>
                         </div>
                     </div>
+                    @if(Auth::user()->hasRole('patient'))
                     <div class="row">
-                        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title d-inline-block">New Patients </h4> 
-                        <a href ="{{route('profile.index',['type'=>'patient'])}}"  class="btn btn-primary float-right">View all</a>
-                    </div>
-                    <div class="card-block">
-                        <div class="table-responsive">
-                            <table class="table mb-0 new-patient-table">
-                                <tbody>
-                                    @if ($patients != null)
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Medical Reports </h3>
                                     
-                                        @foreach ($patients->take(10) as $patient) 
-                                        
+                                <div class="experience-box">
+                                    <table class="table table-border table-striped custom-table datatable mb-0">
+                                        <thead>
                                             <tr>
-                                                <td>
-                                                    <h2>{{$patient->name}}</h2>
-                                                </td>
-                                                <td>{{$patient->email}}</td>
-                                                <td>{{$patient->number}}</td>
+                                                <th>Doctor</th>
+                                                <th>Symptoms</th>
+                                                <th>Diagnosis</th>
+                                                <th>Prescriptions</th>
                                             </tr>
-                                        
-                                        @endforeach
-                                    @else
-                                    
-                                        <tr>
-                                            <td colspan="4">No patient data found.</td>
-                                        </tr>
-                                    
-                                    @endif
-                                </tbody>
-                            </table>
+                                        </thead>
+                                        <tbody>
+                                            @if ($reports != null)
+                                                @foreach ($reports as $report)
+                                                    <tr>
+                                                        <td>{{$report->doctor->name}}</td>
+                                                        <td>{{$report->symptoms}}</td>
+                                                        <td>{{$report->diagnoses}}</td>
+                                                        <td>{{$report->prescriptions}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                    @else
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title d-inline-block">New Patients </h4> 
+                                    <a href ="{{route('profile.index',['type'=>'patient'])}}"  class="btn btn-primary float-right">View all</a>
+                                </div>
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table mb-0 new-patient-table">
+                                            <tbody>
+                                                @if ($patients != null)
+                                                
+                                                    @foreach ($patients->take(10) as $patient) 
+                                                    
+                                                        <tr>
+                                                            <td>
+                                                                <h2>{{$patient->name}}</h2>
+                                                            </td>
+                                                            <td>{{$patient->email}}</td>
+                                                            <td>{{$patient->number}}</td>
+                                                        </tr>
+                                                    
+                                                    @endforeach
+                                                @else
+                                                
+                                                    <tr>
+                                                        <td colspan="4">No patient data found.</td>
+                                                    </tr>
+                                                
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                 
                     </div>
+                    @endif
 </x-app-layout>

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Appointment;
 use App\Models\User;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
@@ -13,7 +14,12 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-       $appointments = Appointment::all();
+        $user = Auth::user();
+        if($user->hasRole('patient')){
+            $appointments = Appointment::where('patient_id', $user->id)->whereNotNull('patient_id')->get();
+        }
+        else{$appointments = Appointment::all();}
+       
        return view('appointments.index', ['appointments' => $appointments]);
     }
 

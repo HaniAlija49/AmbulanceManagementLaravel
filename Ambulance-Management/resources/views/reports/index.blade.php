@@ -14,7 +14,9 @@
                             <th>Symptoms</th>
                             <th>Diagnoses</th>
                             <th>Prescriptions</th>
+                            @if(!Auth::user()->hasRole('patient'))
                             <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -25,6 +27,7 @@
                                 <td>{{ $report->symptoms }}</td>
                                 <td>{{ $report->diagnoses }}</td>
                                 <td>{{ $report->prescriptions }}</td>
+                                @if(!Auth::user()->hasRole('patient'))
                                 <td>
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -38,14 +41,14 @@
                                 </div>
                             </div>
                         </td>
-                               
+                        @endif    
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-
+        @if(!Auth::user()->hasRole('patient'))
         <div class="mt-4">
         <a href="{{ route('reports.create') }}" class="btn btn-primary">Create</a>
         </div>
-
+        @endif
 </x-app-layout>

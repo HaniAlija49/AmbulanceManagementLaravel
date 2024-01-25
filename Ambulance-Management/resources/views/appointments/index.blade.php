@@ -36,33 +36,35 @@
                             <div class="dropdown dropdown-action">
                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="{{ route('appointments.edit', $appointment->id) }}" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <form method="post" action="{{ route('reports.createbydoctor', ['id' => Auth::user()->id, 'aid' => $appointment->id]) }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">
-                                            <i class="fa fa-pencil m-r-5"></i> Add report
-                                        </button>
-                                    </form>
+                                    <a href="{{ route('appointments.edit', $appointment->id) }}" class="dropdown-item btn btn-link text-decoration-none"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+
                                     <form action="{{ route('appointments.destroy', $appointment->id) }}" method="post" class="dropdown-item">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-trash-o m-r-5"></i> Delete</button>
                                     </form>
-
-                                    @if ($appointment->isApproved)
-                                    <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
-                                        @csrf
-                                        <input type="hidden" name="approve" value="0" /> <!-- Set to 0 for false (disapprove) -->
-                                        <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-times m-r-5"></i> Disapprove</button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
-                                        @csrf
-                                        <input type="hidden" name="approve" value="1" /> <!-- Set to 1 for true (approve) -->
-                                        <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-check m-r-5"></i> Approve</button>
-                                    </form>
+                                    @if(Auth::user()->hasRole('doctor'))
+                                        <form method="post"  class="dropdown-item" action="{{ route('reports.createbydoctor', ['id' => Auth::user()->id, 'aid' => $appointment->id]) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-link text-decoration-none">
+                                                <i class="fa fa-pencil m-r-5"></i> Add report
+                                            </button>
+                                        </form>
+                                        
+                                        @if ($appointment->isApproved)
+                                            <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
+                                                @csrf
+                                                <input type="hidden" name="approve" value="0" /> <!-- Set to 0 for false (disapprove) -->
+                                                <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-times m-r-5"></i> Disapprove</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('appointments.toggleApproval', $appointment->id) }}" method="post" class="dropdown-item">
+                                                @csrf
+                                                <input type="hidden" name="approve" value="1" /> <!-- Set to 1 for true (approve) -->
+                                                <button type="submit" class="btn btn-link text-decoration-none"><i class="fa fa-check m-r-5"></i> Approve</button>
+                                            </form>
+                                        @endif
                                 @endif
-                                
                                 </div>
                             </div>
                         </td>

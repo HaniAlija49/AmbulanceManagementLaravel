@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Report;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
-use App\Models\Report;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -14,7 +15,13 @@ class ReportController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+        if($user->hasRole('patient')){
+        $reports = Report::whereHas('appointment', function ($query) use ($user) {
+            $query->where('patient_id', $user->id)->whereNotNull('patient_id');})->get();
+        }else{
         $reports = Report::all();
+        }
         return view('reports.index',['reports'=>$reports]);
         
     }

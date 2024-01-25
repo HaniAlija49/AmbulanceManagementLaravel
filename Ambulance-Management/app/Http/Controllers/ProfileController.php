@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Report;
 use Illuminate\View\View;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
@@ -96,39 +98,45 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-    public function del($id): RedirectResponse
-{
-    $user = User::find($id);
-
-    if ($user) {
-        if($user->role == 'patient') {
-            if($user->profile_image != null){
-                Storage::disk('public')->delete($user->profile_image);
+        public function del($id): RedirectResponse
+    {
+        $user = User::find($id);
+        
+        if ($user != null) {
+            if($user->role != 'admin') {
+                if($user->profile_image != null){
+                    Storage::disk('public')->delete($user->profile_image);
+                }
+                $user->delete();
+                return redirect()->back();
             }
-            $user->delete();
-            return redirect()->back();
+            else{
+                return Redirect::back()->with('error', 'You dont have the role to delete');
+            }
+        } else {
+            return Redirect::back()->with('error', 'User not found.');
         }
-        else{
-            return Redirect::back()->with('error', 'You dont have the role to delete');
-        }
-    } else {
-        return Redirect::back()->with('error', 'User not found.');
     }
-}
 
 
     public function details($id)
     {
     if ($id == null) {
         return response()->json(['error' => 'Not Found'], 404);
-     }
-
+    }
+    
     $user = User::where('id', $id)->first();
+    if ($user && $user->hasRole('patient')) {
+        $reports = Report::whereHas('appointment', function ($query) use ($user) {
+            $query->where('patient_id', $user->id)->whereNotNull('patient_id');
+})->get();
 
-    if ($user == null) {
-        return response()->json(['error' => 'Not Found'], 404);
-     }
-
-    return view('profile.details', ['user' => $user]);
+            return view('profile.details', ['user' => $user, 'reports' => $reports]);
+            }
+    else{
+        $user = User::where('id', $id)->first();
+         return view('profile.details', ['user' => $user]);
+    }
+   
     }
 }

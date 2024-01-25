@@ -43,18 +43,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/employees/{type?}', [ProfileController::class, 'index'])->name('profile.index');  
     Route::match(['post', 'delete'], '/profile/delete/{id}', [ProfileController::class, 'del'])->name('profile.delete');
-
-    Route::resource('/reports', ReportController::class);
-    Route::post('/reports/doctor/{id}/{aid}', [ReportController::class, 'createByDoctor'])->name('reports.createbydoctor');
-
     Route::resource('/appointments',AppointmentController::class);
     Route::post('/appointments/{appointment}/toggle-approval', [AppointmentController::class, 'toggleApproval'])->name('appointments.toggleApproval');
-
-
-
+    Route::resource('/reports', ReportController::class);
 });
-Route::middleware('role:admin')->group(function () {
-   
+Route::middleware('role:doctor|nurse')->group(function () {
+    Route::get('/reports/create', 'ReportController@create')->name('reports.create');
+    Route::post('/reports', 'ReportController@store')->name('reports.store');
 });
-
+Route::middleware('role:doctor')->group(function () {
+Route::post('/reports/doctor/{id}/{aid}', [ReportController::class, 'createByDoctor'])->name('reports.createbydoctor');
+});
 require __DIR__.'/auth.php';

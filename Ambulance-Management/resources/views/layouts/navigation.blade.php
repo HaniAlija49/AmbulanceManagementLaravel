@@ -142,14 +142,42 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
+                @if(Auth::user()->hasRole('patient'))
                 <ul>
                     <li class="menu-title">Main</li>
                     <li class="active">
                         <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
+                   
+                    <li>
+                        <a href ="{{route('profile.index',['type'=>'doctor'])}}"><i class="fa fa-user-md"></i> <span>Doctors</span></a>
+                    </li>
+
+                    <li>
+                     <a href="{{ route('appointments.index') }}"><i class="fa fa-calendar"></i> <span>Appointments</span></a>
+                    </li>
+
+                    <li>
+                     <a href="{{ route('reports.index') }}"><i class="fa fa-book"></i> <span>Reports</span></a>
+                    </li>
+
+
+                </ul>
+                @else
+                <ul>
+                    <li class="menu-title">Main</li>
+                    <li class="active">
+                        <a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li>
+                    @if(Auth::user()->hasRole('patient'))
+                    <li>
+                        <a href ="{{route('profile.index',['type'=>'doctor'])}}"><i class="fa fa-user-md"></i> <span>Doctors</span></a>
+                    </li>
+                    @else
                     <li>
                         <a href="{{ route('profile.index') }}"><i class="fa fa-user-md"></i> <span>Employees</span></a>
                     </li>
+                    @endif
                     <li>
                         <a href ="{{route('profile.index',['type'=>'patient'])}}"><i class="fa fa-wheelchair"></i> <span>Patients</span></a>
                     </li>
@@ -163,6 +191,7 @@
 
 
                 </ul>
+                @endif
             </div>
         </div>
     </div>
