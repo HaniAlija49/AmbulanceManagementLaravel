@@ -31,7 +31,7 @@ php artisan serve
 
 5. **Login with Default Account:**
    - Use the following credentials for the first login:
-     - **Email:** admin@gmail.com
+     - **Email:** admin@admin.com
      - **Password:** Admin123@
 
 ### Usage
