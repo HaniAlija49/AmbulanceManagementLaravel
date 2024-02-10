@@ -69,6 +69,7 @@
             <input type="tel" id="phone_number" name="phone_number" class="form-control" value="{{ old('phone_number', $user->phone_number) }}" required autofocus autocomplete="phone_number" />
             <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
         </div>
+        @role('doctor|nurse')
         <div class="mb-3">
             <label for="type_of_doctor" class="form-label">{{ __('Doctor type') }}</label>
             <select id="type_of_doctor" name="type_of_doctor" class="form-control" required autofocus autocomplete="type_of_doctor">
@@ -80,7 +81,7 @@
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('type_of_doctor')" />
         </div>
-        
+        @endrole
         <div class="mb-3">
             <label for="profile_image" class="form-label">{{ __('profile_image') }}</label>
             <input type="file" id="profile_image" name="profile_image" class="form-control" value="{{ old('profile_image', $user->profile_image) }}" autofocus autocomplete="profile_image" />
