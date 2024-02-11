@@ -25,11 +25,12 @@ To install and use this application, follow these steps:
 3 - **Set up the database** by creating a new MySQL database, and update the .env file with your database credentials : 
 .env.example .env
 php artisan migrate
+Also seed the database with this command: php artisan db:seed --class=UserSeeder
 
 4 - **Start the server:** 
 php artisan serve
 
-5. **Login with Default Account:**
+5 -  **Login with the account that is saved after seeding the database:**
    - Use the following credentials for the first login:
      - **Email:** admin@admin.com
      - **Password:** Admin123@
