@@ -20,7 +20,7 @@
             <div class="row w-100">
               @foreach ($users as $user)
                   
-              @endforeach
+              
               <div class="col-lg-3 col-md-6 d-flex align-items-start">
                 <div class="member card p-2 w-1" data-aos="fade-up" data-aos-delay="100">
                   <div class="member-img">
@@ -39,7 +39,7 @@
                 </div>
               </div>
     
-    
+              @endforeach
             </div>
     
         @else
