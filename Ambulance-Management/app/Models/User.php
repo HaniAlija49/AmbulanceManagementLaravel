@@ -52,7 +52,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'type_of_doctor' => DoctorType::class,
+        //'type_of_doctor' => DoctorType::class,
     ];
 
     public function doctor_appointments() {

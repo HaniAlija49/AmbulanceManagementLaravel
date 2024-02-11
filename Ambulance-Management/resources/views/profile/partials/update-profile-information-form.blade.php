@@ -81,7 +81,11 @@
             </select>
             <x-input-error class="mt-2" :messages="$errors->get('type_of_doctor')" />
         </div>
+        @else
+        <input id="type_of_doctor" name="type_of_doctor" type="hidden" value="None">
+        <x-input-error class="mt-2" :messages="$errors->get('type_of_doctor')" />
         @endrole
+        
         <div class="mb-3">
             <label for="profile_image" class="form-label">{{ __('profile_image') }}</label>
             <input type="file" id="profile_image" name="profile_image" class="form-control" value="{{ old('profile_image', $user->profile_image) }}" autofocus autocomplete="profile_image" />
